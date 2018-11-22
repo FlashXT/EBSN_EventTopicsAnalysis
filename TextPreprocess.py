@@ -9,12 +9,10 @@
 ################################################################
 import re
 from IO import *
-import gensim
-import warnings
-warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
+
 from stop_words import get_stop_words
 from nltk.tokenize import RegexpTokenizer
-from nltk.stem.porter import PorterStemmer
+
 
 
 class textPreprocess():
@@ -33,7 +31,7 @@ class textPreprocess():
         self.content = list
 
 
-    def Preprocess1(self,destpath1):
+    def Preprocess1(self):
         '''
         去除HTML标签
         :return:
@@ -43,11 +41,10 @@ class textPreprocess():
             content = re.sub(r'<[^>]*>',' ',item[1])
             list.append([item[0],content])
 
-        csv_writer(destpath1,list)
         self.content = list
 
 
-    def Preprocess2(self,destpath2):
+    def Preprocess2(self):
         '''
         去除除了26个字母,数字以外的字符
         :return:
@@ -60,11 +57,10 @@ class textPreprocess():
             tokens = tokenizer.tokenize(raw)
             list.append([item[0],tokens])
 
-        csv_writer(destpath2,list)
         self.content = list
 
 
-    def Preprocess3(self,destpath3):
+    def Preprocess3(self):
         '''
         去除停用词
         :return: 
@@ -77,7 +73,6 @@ class textPreprocess():
             stopped_tokens = [i for i in item[1] if not i in en_stop]
             list.append([item[0],stopped_tokens])
 
-        csv_writer(destpath3,list)
         self.content = list
 
 
@@ -86,13 +81,11 @@ class textPreprocess():
 def main():
     Sourpath = os.getcwd()+"\\Data\\Group_12542_events.csv"
     Destpath = os.getcwd()+"\\Data\\Group_12542_eventsPreProcessed.csv"
-    destpath1 = os.getcwd() + "\\Data\\Group_12542_eventsPreProcessed1.csv"
-    destpath2 = os.getcwd() + "\\Data\\Group_12542_eventsPreProcessed2.csv"
-    # destpath3 = os.getcwd() + "\\Data\\Group_12542_eventsPreProcessed3.csv"
     text = textPreprocess(Sourpath,Destpath)
-    text.Preprocess1(Destpath)
-    text.Preprocess2(destpath1)
-    text.Preprocess3(destpath2)
+    text.Preprocess1()
+    text.Preprocess2()
+    text.Preprocess3()
+    csv_writer(Destpath,text.content)
 
 if __name__ == "__main__":
     main()
