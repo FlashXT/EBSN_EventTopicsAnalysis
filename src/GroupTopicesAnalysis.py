@@ -1,8 +1,6 @@
-import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-from IO import *
 
+from ToolClasses.IO import *
+import matplotlib.pyplot as plt
 
 def topicsSumByGroup(topics):
     topicsum = []
@@ -47,7 +45,7 @@ def plotHist(topicsum):
 
 
 def main():
-    path = os.getcwd()+"\\Grouptopics.csv"
+    path = os.getcwd()+"\\..\\Data\\GroupTopics\\Grouptopics.csv"
     topics = csv_reader(path)
     # print(len(topics))
     topicsum,topicsSummary = topicsSumByGroup(topics)
